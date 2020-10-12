@@ -1,15 +1,12 @@
 <?php
 
-/**
- * @author Bona Brian Siagian <bonabriansiagian@gmail.com>
- */
-
 namespace App\Infrastructure\Abstracts;
 
 use Faker\Generator;
 use Illuminate\Database\Eloquent\Factory;
 
 /**
+ * Class ModelFactory
  * Base factory for usage inside domains.
  */
 abstract class ModelFactory
