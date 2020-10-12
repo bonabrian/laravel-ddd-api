@@ -4,7 +4,7 @@
  * @author Bona Brian Siagian <bonabriansiagian@gmail.com>
  */
 
-namespace App\Application\Http\Middleware;
+namespace App\Core\Http\Middleware;
 
 use Fideloper\Proxy\TrustProxies as Middleware;
 use Illuminate\Http\Request;

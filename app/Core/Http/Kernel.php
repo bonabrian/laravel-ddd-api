@@ -4,7 +4,7 @@
  * @author Bona Brian Siagian <bonabriansiagian@gmail.com>
  */
 
-namespace App\Application\Http;
+namespace App\Core\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -17,16 +17,16 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \App\Application\Http\Middleware\ForceAcceptJson::class,
-        // \App\Application\Http\Middleware\TrustHosts::class,
-        \App\Application\Http\Middleware\TrustProxies::class,
+        \App\Core\Http\Middleware\ForceAcceptJson::class,
+        // \App\Http\Middleware\TrustHosts::class,
+        \App\Core\Http\Middleware\TrustProxies::class,
         \Fruitcake\Cors\HandleCors::class,
-        \App\Application\Http\Middleware\CheckForMaintenanceMode::class,
+        \App\Core\Http\Middleware\PreventRequestsDuringMaintenance::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
-        \App\Application\Http\Middleware\TrimStrings::class,
+        \App\Core\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Application\Http\Middleware\SetLocale::class,
-        \Illuminate\Http\Middleware\SetCacheHeaders::class,
+        \App\Core\Http\Middleware\SetLocale::class,
+        \Illuminate\Http\Middleware\SetCacheHeaders::class
     ];
 
     /**
@@ -49,15 +49,16 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth' => \App\Core\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Application\Http\Middleware\RedirectIfAuthenticated::class,
-        // 'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
-        // 'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+        'guest' => \App\Core\Http\Middleware\RedirectIfAuthenticated::class,
+        'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+        'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 
     /**
@@ -67,16 +68,17 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewarePriority = [
-        \App\Application\Http\Middleware\ForceAcceptJson::class,
-        \App\Application\Http\Middleware\CheckForMaintenanceMode::class,
-        \Illuminate\Auth\Middleware\Authenticate::class,
+        \App\Core\Http\Middleware\ForceAcceptJson::class,
+        \App\Core\Http\Middleware\PreventRequestsDuringMaintenance::class,
+        \App\Core\Http\Middleware\Authenticate::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Illuminate\Auth\Middleware\Authorize::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
-        \App\Application\Http\Middleware\TrimStrings::class,
+        \App\Core\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Application\Http\Middleware\TrustProxies::class,
-        \App\Application\Http\Middleware\SetLocale::class,
+        // \App\Core\Http\Middleware\TrustHosts::class,
+        \App\Core\Http\Middleware\TrustProxies::class,
+        \App\Core\Http\Middleware\SetLocale::class,
         \Illuminate\Http\Middleware\SetCacheHeaders::class,
     ];
 }

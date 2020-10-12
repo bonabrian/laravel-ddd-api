@@ -4,7 +4,7 @@
  * @author Bona Brian Siagian <bonabriansiagian@gmail.com>
  */
 
-namespace App\Application\Exceptions;
+namespace App\Core\Exceptions;
 
 use RuntimeException;
 

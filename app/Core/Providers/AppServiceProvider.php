@@ -4,7 +4,7 @@
  * @author Bona Brian Siagian <bonabriansiagian@gmail.com>
  */
 
-namespace App\Application\Providers;
+namespace App\Core\Providers;
 
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;

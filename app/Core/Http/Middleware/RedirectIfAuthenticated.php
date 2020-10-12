@@ -4,12 +4,15 @@
  * @author Bona Brian Siagian <bonabriansiagian@gmail.com>
  */
 
-namespace App\Application\Http\Middleware;
+namespace App\Core\Http\Middleware;
 
+use App\Interfaces\Http\Controllers\ResponseTrait;
 use Closure;
 
-class SetLocale
+class RedirectIfAuthenticated
 {
+    use ResponseTrait;
+
     /**
      * Handle an incoming request.
      *
@@ -20,10 +23,6 @@ class SetLocale
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (auth()->check()) {
-            app()->setLocale(auth()->user()->locale);
-        }
-
         return $next($request);
     }
 }

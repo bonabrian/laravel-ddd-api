@@ -4,7 +4,7 @@
  * @author Bona Brian Siagian <bonabriansiagian@gmail.com>
  */
 
-namespace App\Application\Http\Middleware;
+namespace App\Core\Http\Middleware;
 
 use Closure;
 

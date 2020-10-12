@@ -4,7 +4,7 @@
  * @author Bona Brian Siagian <bonabriansiagian@gmail.com>
  */
 
-namespace App\Application\Exceptions;
+namespace App\Core\Exceptions;
 
 use App\Domain\Users\Exceptions\LockedException;
 use App\Interfaces\Http\Controllers\ResponseTrait;
