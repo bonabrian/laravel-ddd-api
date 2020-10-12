@@ -7,7 +7,7 @@
 namespace App\Infrastructure\Abstracts;
 
 use Faker\Generator;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factory;
 
 /**
  * Base factory for usage inside domains.
