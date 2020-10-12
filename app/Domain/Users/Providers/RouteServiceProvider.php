@@ -1,56 +1,49 @@
 <?php
 
-/**
- * @author Bona Brian Siagian <bonabriansiagian@gmail.com>
- */
-
 namespace App\Domain\Users\Providers;
 
-use Illuminate\Routing\Router;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * This namespace is applied to users domain route.
+     * The controller namespace for the application.
      *
-     * In addition, it is set as the URL generator's root namespace.
+     * When present, controller route declarations will automatically be prefixed with this namespace.
      *
-     * @var string
+     * @var string|null
      */
-    protected $namespace = 'App\Domain\Users\Http\Controllers';
+    protected $namespace = 'App\\Domain\\Users\\Http\\Controllers';
 
     /**
-     * Define the routes for the application.
+     * Define your route model bindings, pattern filters, etc.
      *
      * @return void
      */
-    public function map(Router $router)
+    public function boot()
     {
-        $this->mapApiRoutes($router);
+        $this->configureRateLimiting();
+
+        $this->routes(function () {
+            Route::namespace($this->namespace)
+                ->middleware('api')
+                ->group(__DIR__ . '/../Http/routes.php');
+        });
     }
 
     /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
+     * Configure the rate limiters for the application.
      *
      * @return void
      */
-    protected function mapApiRoutes(Router $router)
+    protected function configureRateLimiting()
     {
-        $router->group([
-            'namespace' => $this->namespace,
-            'middleware' => 'api'
-        ], function (Router $router) {
-            // Guest route
-            $router->group([
-                'middleware' => 'guest'
-            ], function () use ($router) {
-                $router->get('/', function () {
-                    return 'Hello world';
-                });
-            });
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60);
         });
     }
 }
